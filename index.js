@@ -1,4 +1,3 @@
-// Importing the express library
 const express = require("express");
 
 const fs = require("fs");
@@ -18,6 +17,9 @@ app.get("/", (req, res) => {
 
 app.post("/items", (req, res) => {
   const newItem = req.body;
+  if (Object.keys(req.body).length === 0) {
+    res.status(400).send("Invalid request");
+  }
   fs.readFile(dataFIlePath, "utf8", (err, data) => {
     if (err) {
       console.error("Error :", err);
@@ -25,7 +27,17 @@ app.post("/items", (req, res) => {
         message: "Server Error",
       });
     }
-    let items = JSON.parse(data);
+    let items = [];
+
+    try {
+      items = JSON.parse(data);
+    } catch (error) {
+      console.error("Error parsing JSON:", error);
+      return res.status(500).json({
+        message: "Server Error",
+      });
+    }
+
     items.push(newItem);
 
     fs.writeFile(dataFIlePath, JSON.stringify(items), (err) => {
@@ -35,6 +47,9 @@ app.post("/items", (req, res) => {
           message: "Server Error",
         });
       }
+      res.status(201).json({
+        message: "Item created successfully",
+      });
     });
   });
 });
