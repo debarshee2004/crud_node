@@ -1,3 +1,5 @@
+![Node Crud-min](https://github.com/debarshee2004/node_crud_basics/assets/129538241/0b0686ef-f422-4b82-acbf-1740c4aacb8d)
+
 # CRUD NODE
 
 The code in the index.js file implements a basic RESTful API using Node.js and Express.js for CRUD (Create, Read, Update, Delete) operations on a JSON data file. Here's how each operation works:
